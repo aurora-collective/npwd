@@ -5,6 +5,7 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
+    "useDashNumber": false,
     "enableMultiChar": false
   },
   "database": {
