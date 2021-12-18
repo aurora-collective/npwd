@@ -116,7 +116,7 @@ const takePhoto = () =>
     if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.useAuthorization) {
       return console.error('Screenshot basic token not found. Please set in server.cfg');
     }
-    exp['screenshot-basic'].requestScreenshotUpload(
+    exp['aurora_scr'].requestScreenshotUpload(
       config.images.url,
       config.images.type,
       {
