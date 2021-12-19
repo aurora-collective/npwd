@@ -55,13 +55,13 @@ export class CallService {
 
   handleCallAccepted(callData: ActiveCall) {
     this.currentCall = callData.channelId;
-    exp['pma-voice'].setCallChannel(callData.channelId);
+    exp['aurora_voice'].setCallChannel(callData.channelId);
     CallService.sendCallAction<ActiveCall>(CallEvents.SET_CALLER, callData);
   }
 
   handleEndCall() {
     this.currentCall = 0;
-    exp['pma-voice'].setCallChannel(0);
+    exp['aurora_voice'].setCallChannel(0);
     this.openCallModal(false);
 
     CallService.sendCallAction<null>(CallEvents.SET_CALLER, null);

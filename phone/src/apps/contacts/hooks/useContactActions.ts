@@ -41,14 +41,14 @@ export const useContactActions = (): UseContactsValue => {
     [],
   );
 
-  const getContactByNumber = useRecoilCallback<[string], Contact | null>(
+  const getContactByNumber = useRecoilCallback<[string], Contact>(
     ({ snapshot }) =>
       (number: string) => {
         const { state, contents } = snapshot.getLoadable(contactsState.contacts);
         if (state !== 'hasValue') return null;
 
         for (const contact of contents) {
-          if (contents.number === number) return contact;
+          if (contact.number === number) return contact;
         }
         return null;
       },

@@ -5,15 +5,16 @@
     "exportFunction": "myCheckerFunction"
   },
   "general": {
+    "useDashNumber": false,
     "enableMultiChar": false
   },
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",
-    "identifierType": "license",
+    "identifierType": "steam",
     "profileQueries": true,
-    "phoneNumberColumn": "phone_number"
+    "phoneNumberColumn": "phone"
   },
   "images": {
     "url": "https://api.imgur.com/3/image",

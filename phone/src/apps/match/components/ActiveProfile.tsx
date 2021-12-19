@@ -13,9 +13,9 @@ import { Tooltip } from '@ui/components/Tooltip';
 
 const useStyles = makeStyles({
   root: {
-    position: 'absolute',
+    position: 'relative',
     margin: '15px 15px 25px 15px',
-    height: 'calc(100% - 90px)',
+    height: 'calc(95% - 90px)',
     width: 'calc(100% - 30px)',
     overflow: 'hidden',
     cursor: 'pointer',
@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
   buttons: {
     position: 'absolute',
-    bottom: '3px',
+    bottom: 70,
     width: '100%',
     height: '55px',
   },
@@ -128,8 +128,8 @@ const ActiveProfile = ({ profile, onSwipe }: IProps) => {
     <>
       <Draggable id="active-profile" onDrag={onDrag} onDrop={handleSwipe}>
         <Card raised className={c.root}>
-          <StatusDisplay className={likeClass} text={t('MATCH.LIKED')} visible={isLiked} />
-          <StatusDisplay className={nopeClass} text={t('MATCH.NOPE')} visible={notLiked} />
+          <StatusDisplay className={likeClass} text={t('MATCH.MESSAGES.LIKED')} visible={isLiked} />
+          <StatusDisplay className={nopeClass} text={t('MATCH.MESSAGES.NOPE')} visible={notLiked} />
           <Profile profile={profile} />
         </Card>
       </Draggable>

@@ -1,14 +1,14 @@
-import { PhoneEvents } from '@typings/phone';
-import { IAlert } from '../snackbar/hooks/useSnackbar';
+import { PhoneEvents } from '../../../../typings/phone';
+import { QueueNotificationOpts } from '../new-notifications/hooks/useNotifications';
 
-function dispatchEvent({ method, app, data = {} }: { method: string; app: string; data: unknown }) {
+function dispatchEvent<T = any>({ method, app, data }: { method: string; app: string; data: T }) {
   setTimeout(() => {
     window.dispatchEvent(
       new MessageEvent('message', {
         data: {
           app,
           method,
-          data,
+          data: data ?? {},
         },
       }),
     );
@@ -17,19 +17,18 @@ function dispatchEvent({ method, app, data = {} }: { method: string; app: string
 
 const debugObj = {
   testNotification: () => {
-    dispatchEvent({ method: 'notiTest', app: 'PHONE', data: {} });
-  },
-  mockNuiEvent: dispatchEvent,
-  testSnackbar: (message: string, type: IAlert) => {
-    dispatchEvent({
+    dispatchEvent<QueueNotificationOpts>({
+      method: PhoneEvents.QUEUE_NOTIFICATION,
       app: 'PHONE',
       data: {
-        message,
-        type,
+        appId: 'TWITTER',
+        path: '/twitter',
+        message: 'Taso just tweeted: You suck bro!',
+        duration: 3000,
       },
-      method: PhoneEvents.ADD_SNACKBAR_ALERT,
     });
   },
+  mockNuiEvent: dispatchEvent,
   setPhoneVisible: (bool: boolean) => {
     dispatchEvent({
       method: PhoneEvents.SET_VISIBILITY,

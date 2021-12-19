@@ -10,6 +10,7 @@ import ProfileField from '../../../../ui/components/ProfileField';
 import { fetchNui } from '../../../../utils/fetchNui';
 import { ServerPromiseResp } from '@typings/common';
 import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useTwitterActions } from '../../hooks/useTwitterActions';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -29,6 +30,8 @@ export function Profile() {
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
   const { addAlert } = useSnackbar();
+
+  const { updateLocalProfile } = useTwitterActions();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -58,8 +61,10 @@ export function Profile() {
         });
       }
 
+      updateLocalProfile({ profile_name: name, bio, location, job, avatar_url: avatarUrl });
+
       addAlert({
-        message: t('TWITTER_EDIT_PROFILE_SUCCESS'),
+        message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
         type: 'success',
       });
     });

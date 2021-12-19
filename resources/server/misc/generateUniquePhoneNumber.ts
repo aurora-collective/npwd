@@ -19,8 +19,13 @@ const genNumber = (length: number): string => {
 };
 
 const generateUsNumber = (): string => {
-  const rawNumber = genNumber(10);
-  return rawNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  if (config.general.enableMultiChar) {
+    const rawNumber = genNumber(10);
+    return rawNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+  } else {
+    //PH Phone number style for Aurora
+    return '0' + genNumber(9);
+  }
 };
 
 /**/
