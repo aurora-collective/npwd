@@ -1,21 +1,20 @@
 {
-  "Locale": "en",
   "PhoneAsItem": {
     "enabled": false,
     "exportResource": "my-core-resource",
     "exportFunction": "myCheckerFunction"
   },
   "general": {
-    "useDashNumber": true,
+    "useDashNumber": false,
     "enableMultiChar": false
   },
   "database": {
     "useIdentifierPrefix": false,
     "playerTable": "users",
     "identifierColumn": "identifier",
-    "identifierType": "license",
+    "identifierType": "steam",
     "profileQueries": true,
-    "phoneNumberColumn": "phone_number"
+    "phoneNumberColumn": "phone"
   },
   "images": {
     "url": "https://api.imgur.com/3/image",
@@ -24,10 +23,7 @@
     "contentType": "multipart/form-data",
     "authorizationPrefix": "Client-ID",
     "useAuthorization": true,
-    "returnedDataIndexes": [
-      "data",
-      "link"
-    ]
+    "returnedDataIndexes": ["data", "link"]
   },
   "twitter": {
     "showNotifications": true,
@@ -45,9 +41,6 @@
   "match": {
     "generateProfileNameFromUsers": true,
     "allowEditableProfileName": true
-  },
-  "bank": {
-    "showNotifications": true
   },
   "debug": {
     "level": "silly",

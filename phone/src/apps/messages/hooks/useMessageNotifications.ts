@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { matchPath, useHistory } from 'react-router-dom';
-import { useApp } from '../../../os/apps/hooks/useApps';
-import { useNotifications } from '../../../os/notifications/hooks/useNotifications';
+import { useApp } from '@os/apps/hooks/useApps';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
 import useMessages from './useMessages';
 import { useRecoilValue } from 'recoil';
 import { messageState } from './state';
@@ -52,7 +52,7 @@ export const useMessageNotifications = () => {
         addNotification({
           ...n,
           title: group.phoneNumber || group.display,
-          content: t('APPS_MESSAGES_UNREAD_MESSAGES', {
+          content: t('MESSAGES.MESSAGES.UNREAD_MESSAGES', {
             count: group.unread,
           }),
         });

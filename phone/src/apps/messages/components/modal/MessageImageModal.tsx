@@ -4,12 +4,12 @@ import Modal from '../../../../ui/components/Modal';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { Box, Typography, Button } from '@mui/material';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ContextMenu } from '../../../../ui/components/ContextMenu';
-import { deleteQueryFromLocation } from '../../../../common/utils/deleteQueryFromLocation';
-import { PictureResponsive } from '../../../../ui/components/PictureResponsive';
-import { MessageEvents } from '../../../../../../typings/messages';
+import { ContextMenu } from '@ui/components/ContextMenu';
+import { deleteQueryFromLocation } from '@common/utils/deleteQueryFromLocation';
+import { PictureResponsive } from '@ui/components/PictureResponsive';
+import { MessageEvents } from '@typings/messages';
 import { fetchNui } from '../../../../utils/fetchNui';
-import { useSnackbar } from '../../../../ui/hooks/useSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 import { useTranslation } from 'react-i18next';
 
 interface IProps {
@@ -40,7 +40,7 @@ export const MessageImageModal = ({ isOpen, messageGroupId, onClose, image }: IP
           if (resp !== 'ok') {
             onClose();
             return addAlert({
-              message: t('APPS_MESSAGES_NEW_MESSAGE_FAILED'),
+              message: t('MESSAGES.FEEDBACK.NEW_MESSAGE_FAILED'),
               type: 'error',
             });
           }

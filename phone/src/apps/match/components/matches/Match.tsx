@@ -7,7 +7,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 
-import { FormattedMatch } from '../../../../../../typings/match';
+import { FormattedMatch } from '@typings/match';
 import Profile from '../profile/Profile';
 
 const useStyles = makeStyles({
@@ -36,7 +36,7 @@ export const Match = ({ match }: IProps) => {
     setShowProfile((show) => !show);
   };
 
-  const secondaryText = t('APPS_MATCH_PROFILE_MATCHED_AT', {
+  const secondaryText = t('MATCH.MESSAGES.PROFILE_MATCHED_AT', {
     matchedAt: match.matchedAtFormatted,
   });
 

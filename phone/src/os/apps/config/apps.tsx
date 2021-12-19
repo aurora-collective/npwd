@@ -3,10 +3,9 @@ import { blue, common, grey, purple } from '@mui/material/colors';
 import { DialerApp } from '../../../apps/dialer/components/DialerApp';
 import { ContactsApp } from '../../../apps/contacts/components/ContactsApp';
 import { CalculatorApp } from '../../../apps/calculator/components/CalculatorApp';
+import { BankApp } from '../../../apps/bank/components/BankApp';
 import { SettingsApp } from '../../../apps/settings/components/SettingsApp';
 import { MessagesApp } from '../../../apps/messages/components/MessagesApp';
-import { TwitterApp } from '../../../apps/twitter/components/TwitterApp';
-import { ExampleApp } from '../../../apps/example/components/ExampleApp';
 import { MarketplaceApp } from '../../../apps/marketplace/components/MarketplaceApp';
 import { NotesApp } from '../../../apps/notes/NotesApp';
 import CameraApp from '../../../apps/camera/components/CameraApp';
@@ -32,9 +31,10 @@ import {
 } from '../../../apps/twitter/twitter.theme';
 import { MATCH_APP_PRIMARY_COLOR, MATCH_APP_TEXT_COLOR } from '../../../apps/match/match.theme';
 import { SvgIconProps } from '@mui/material';
-import { INotificationIcon } from '../../notifications/providers/NotificationsProvider';
+import { INotificationIcon } from '@os/notifications/providers/NotificationsProvider';
 import { BrowserApp } from '../../../apps/browser/components/BrowserApp';
 import { MatchApp } from '../../../apps/match/components/MatchApp';
+import TwitterContainer from '../../../apps/twitter/components/TwitterContainer';
 
 export interface IAppConfig {
   id: string;
@@ -79,7 +79,7 @@ export const APPS: IAppConfig[] = [
     color: MESSAGES_APP_TEXT_COLOR,
     path: '/messages',
     Route: () => (
-      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={true} />
+      <AppRoute id="MESSAGES" path="/messages" component={MessagesApp} emitOnOpen={false} />
     ),
   },
   {
@@ -112,15 +112,14 @@ export const APPS: IAppConfig[] = [
       <AppRoute id="SETTINGS" path="/settings" component={SettingsApp} emitOnOpen={false} />
     ),
   },
-  /* Hiding the bank app while the bank resource gets done */
-  /*{
+  {
     id: 'BANK',
     nameLocale: 'APPS_BANK',
     backgroundColor: blue[900],
     color: common.white,
     path: '/bank',
-    Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} />,
-  },*/
+    Route: () => <AppRoute id="BANK" path="/bank" component={BankApp} emitOnOpen={false} />,
+  },
   {
     id: 'MATCH',
     nameLocale: 'APPS_MATCH',
@@ -135,7 +134,9 @@ export const APPS: IAppConfig[] = [
     backgroundColor: TWITTER_APP_PRIMARY_COLOR,
     color: TWITTER_APP_TEXT_COLOR,
     path: '/twitter',
-    Route: () => <AppRoute id="TWITTER" path="/twitter" component={TwitterApp} emitOnOpen={true} />,
+    Route: () => (
+      <AppRoute id="TWITTER" path="/twitter" component={TwitterContainer} emitOnOpen={false} />
+    ),
   },
   {
     id: 'MARKETPLACE',
@@ -169,17 +170,3 @@ export const APPS: IAppConfig[] = [
     Route: () => <AppRoute id="CAMERA" path="/camera" component={CameraApp} emitOnOpen={true} />,
   },
 ];
-
-// Example app only in dev
-if (process.env.NODE_ENV === 'development') {
-  APPS.push({
-    id: 'EXAMPLE',
-    nameLocale: 'APPS_EXAMPLE',
-    backgroundColor: blue[500],
-    color: blue[50],
-    path: '/example',
-    Route: () => (
-      <AppRoute id="EXAMPLE" path="/example" component={ExampleApp} emitOnOpen={false} />
-    ),
-  });
-}

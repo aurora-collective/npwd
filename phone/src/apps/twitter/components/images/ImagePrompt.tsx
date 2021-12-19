@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
-import { TextField } from '../../../../ui/components/Input';
+import { TextField } from '@ui/components/Input';
 
 const useStyles = makeStyles({
   textField: {
@@ -34,7 +34,7 @@ export const ImagePrompt = ({ visible, value, handleChange }) => {
       onChange={handleImageChange}
       multiline
       size="small"
-      placeholder={t('APPS_TWITTER_IMAGE_PLACEHOLDER')}
+      placeholder={t('TWITTER.IMAGE_PLACEHOLDER')}
       inputRef={textFieldRef}
     />
   );

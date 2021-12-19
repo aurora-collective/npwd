@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useCustomWallpaperModal, useSettings } from '../hooks/useSettings';
 import { useTranslation } from 'react-i18next';
 import DialogForm from '../../../ui/components/DialogForm';
-import { useSnackbar } from '../../../ui/hooks/useSnackbar';
-import { TextField } from '../../../ui/components/Input';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { TextField } from '@ui/components/Input';
 
 const WallpaperModal: React.FC = () => {
   const [customWallpaperModal, setCustomWallpaperModal] = useCustomWallpaperModal();
@@ -23,7 +23,7 @@ const WallpaperModal: React.FC = () => {
   const handleNewWallpaper = () => {
     if (isImageAndUrl(value)) {
       handleSettingChange('wallpaper', {
-        label: 'APPS_SETTINGS_OPTIONS_CUSTOM_WALLPAPER',
+        label: t('SETTINGS.OPTIONS.CUSTOM_WALLPAPER.DIALOG_TITLE'),
         value,
       });
       setCustomWallpaperModal(false);

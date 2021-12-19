@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { ActiveCall } from '../../../../../typings/call';
-import { useApp } from '../../apps/hooks/useApps';
-import { useNotifications } from '../../notifications/hooks/useNotifications';
-import { useRingtoneSound } from '../../sound/hooks/useRingtoneSound';
+import { ActiveCall } from '@typings/call';
+import { useApp } from '@os/apps/hooks/useApps';
+import { useNotifications } from '@os/notifications/hooks/useNotifications';
+import { useRingtoneSound } from '@os/sound/hooks/useRingtoneSound';
 import { CallNotification } from '../components/CallNotification';
 
 const NOTIFICATION_ID = 'call:current';
@@ -45,12 +45,12 @@ export const useCallNotifications = () => {
         ...callNotificationBase,
         content: (
           <CallNotification>
-            {t('APPS_DIALER_CURRENT_CALL_WITH', {
+            {t('DIALER.MESSAGES.CURRENT_CALL_WITH', {
               transmitter: call.transmitter,
             })}
           </CallNotification>
         ),
-        title: t('APPS_DIALER_CURRENT_CALL_TITLE'),
+        title: t('DIALER.MESSAGES.CURRENT_CALL_TITLE'),
       });
     }
     if (!call.isTransmitter && !call.is_accepted) {
@@ -59,13 +59,13 @@ export const useCallNotifications = () => {
       addNotificationAlert(
         {
           ...callNotificationBase,
-          title: t('APPS_DIALER_INCOMING_CALL_TITLE', {
+          title: t('DIALER.MESSAGES.INCOMING_CALL_TITLE', {
             transmitter: call.transmitter,
           }),
           keepWhenPhoneClosed: true,
           content: (
             <CallNotification>
-              {t('APPS_DIALER_TRANSMITTER_IS_CALLING', {
+              {t('DIALER.MESSAGES.TRANSMITTER_IS_CALLING', {
                 transmitter: call.transmitter,
               })}
             </CallNotification>

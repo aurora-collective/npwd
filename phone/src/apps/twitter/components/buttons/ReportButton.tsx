@@ -2,30 +2,42 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, CircularProgress, MenuItem } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { TwitterEvents } from '../../../../../../typings/twitter';
-
-const LOADING_TIME = 1250;
+import { TwitterEvents } from '@typings/twitter';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
 
 function ReportButton({ handleClose, tweetId, isReported }) {
-  const Nui = useNuiRequest();
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const { addAlert } = useSnackbar();
 
   const handleClick = () => {
-    Nui.send(TwitterEvents.REPORT, tweetId);
     setLoading(true);
-    window.setTimeout(() => {
+
+    fetchNui<ServerPromiseResp<void>>(TwitterEvents.REPORT, { tweetId }).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t('APPS_TWITTER_REPORT_TWEET_FAILED'),
+          type: 'error',
+        });
+      }
+
       setLoading(false);
       handleClose();
-    }, LOADING_TIME);
+
+      addAlert({
+        message: t('APPS_TWITTER_REPORT_TWEET_SUCCESS'),
+        type: 'success',
+      });
+    });
   };
 
   if (isReported) {
     return (
       <MenuItem onClick={handleClose}>
         <DoneIcon />
-        <span style={{ marginLeft: '5px' }}>{t('APPS_TWITTER_REPORTED')}</span>
+        <span style={{ marginLeft: '5px' }}>{t('TWITTER.REPORTED')}</span>
       </MenuItem>
     );
   }
@@ -38,7 +50,7 @@ function ReportButton({ handleClose, tweetId, isReported }) {
     );
   }
 
-  return <MenuItem onClick={handleClick}>{t('APPS_TWITTER_REPORT')}</MenuItem>;
+  return <MenuItem onClick={handleClick}>{t('TWITTER.REPORT')}</MenuItem>;
 }
 
 export default ReportButton;

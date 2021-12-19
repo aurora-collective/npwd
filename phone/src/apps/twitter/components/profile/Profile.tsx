@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-import { useNuiRequest } from 'fivem-nui-react-lib';
 import { useProfile } from '../../hooks/useProfile';
 import Avatar from '../Avatar';
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { usePhone } from '@os/phone/hooks/usePhone';
+import { TwitterEvents } from '@typings/twitter';
 import ProfileField from '../../../../ui/components/ProfileField';
+import { fetchNui } from '../../../../utils/fetchNui';
+import { ServerPromiseResp } from '@typings/common';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { useTwitterActions } from '../../hooks/useTwitterActions';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: 'relative',
     width: '100%',
@@ -22,11 +25,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Profile() {
-  const Nui = useNuiRequest();
   const classes = useStyles();
   const [t] = useTranslation();
   const { profile } = useProfile();
   const { ResourceConfig } = usePhone();
+  const { addAlert } = useSnackbar();
+
+  const { updateLocalProfile } = useTwitterActions();
 
   // note that this assumes we are defensively checking
   // that profile is not null in a parent above this component.
@@ -47,7 +52,22 @@ export function Profile() {
       location,
       job,
     };
-    Nui.send(TwitterEvents.UPDATE_PROFILE, data);
+
+    fetchNui<ServerPromiseResp>(TwitterEvents.UPDATE_PROFILE, data).then((resp) => {
+      if (resp.status !== 'ok') {
+        return addAlert({
+          message: t(''),
+          type: 'error',
+        });
+      }
+
+      updateLocalProfile({ profile_name: name, bio, location, job, avatar_url: avatarUrl });
+
+      addAlert({
+        message: t('TWITTER.FEEDBACK.EDIT_PROFILE_SUCCESS'),
+        type: 'success',
+      });
+    });
   };
 
   // fetching the config is an asynchronous call so defend against it
@@ -60,30 +80,30 @@ export function Profile() {
       {enableAvatars && <Avatar avatarUrl={avatarUrl} showInvalidImage />}
       <div className={classes.spacer} />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_AVATAR')}
+        label={t('TWITTER.EDIT_PROFILE_AVATAR')}
         value={avatarUrl}
         handleChange={handleAvatarChange}
         allowChange={enableAvatars}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_NAME')}
+        label={t('TWITTER.EDIT_PROFILE_NAME')}
         value={name}
         handleChange={handleNameChange}
         allowChange={allowEditableProfileName}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_BIO')}
+        label={t('TWITTER.EDIT_PROFILE_BIO')}
         value={bio}
         handleChange={handleBioChange}
         multiline
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_LOCATION')}
+        label={t('TWITTER.EDIT_PROFILE_LOCATION')}
         value={location}
         handleChange={handleLocationChange}
       />
       <ProfileField
-        label={t('APPS_TWITTER_EDIT_PROFILE_JOB')}
+        label={t('TWITTER.EDIT_PROFILE_JOB')}
         value={job}
         handleChange={handleJobChange}
       />

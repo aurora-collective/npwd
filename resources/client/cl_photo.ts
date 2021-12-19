@@ -7,7 +7,7 @@ import { animationService } from './animations/animation.controller';
 import { RegisterNuiCB, RegisterNuiProxy } from './cl_utils';
 
 const SCREENSHOT_BASIC_TOKEN = GetConvar('SCREENSHOT_BASIC_TOKEN', 'none');
-const exp = (global as any).exports;
+const exp = global.exports;
 
 let inCameraMode = false;
 
@@ -32,6 +32,7 @@ const displayHelperText = () => {
   EndTextCommandDisplayHelp(0, true, false, -1);
 };
 
+// TODO: The flow here seems a little convuluted, we need to take a look at it.
 RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   await animationService.openCamera();
   emit('npwd:disableControlActions', false);
@@ -42,10 +43,13 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
   CellCamActivate(true, true);
   // Hide phone from rendering temporary
   closePhoneTemp();
-
   SetNuiFocus(false, false);
 
   inCameraMode = true;
+
+  // We want to emit this event for UI handling in other resources
+  // We hide nothing in NPWD by default
+  emit(PhotoEvents.NPWD_PHOTO_MODE_STARTED);
 
   while (inCameraMode) {
     await Delay(0);
@@ -67,10 +71,14 @@ RegisterNuiCB<void>(PhotoEvents.TAKE_PHOTO, async (_, cb) => {
     }
     displayHelperText();
   }
+
   ClearHelp(true);
+  // We can now signal to other resources for ending photo mode
+  // and redisplaying HUD components
+  emit(PhotoEvents.NPWD_PHOTO_MODE_ENDED);
+
   emit('npwd:disableControlActions', true);
   await animationService.closeCamera();
-  console.log('anim - closing camera');
 });
 
 const handleTakePicture = async () => {
@@ -108,7 +116,7 @@ const takePhoto = () =>
     if (SCREENSHOT_BASIC_TOKEN === 'none' && config.images.useAuthorization) {
       return console.error('Screenshot basic token not found. Please set in server.cfg');
     }
-    exp['screenshot-basic'].requestScreenshotUpload(
+    exp['aurora_scr'].requestScreenshotUpload(
       config.images.url,
       config.images.type,
       {

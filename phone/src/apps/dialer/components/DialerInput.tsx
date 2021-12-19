@@ -7,8 +7,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { DialInputCtx, IDialInputCtx } from '../context/InputContext';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { InputBase } from '../../../ui/components/Input';
-import { useCall } from '../../../os/call/hooks/useCall';
+import { InputBase } from '@ui/components/Input';
+import { useCall } from '@os/call/hooks/useCall';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -48,7 +48,7 @@ export const DialerInput: React.FC = () => {
   return (
     <Box component={Paper} className={classes.root}>
       <InputBase
-        placeholder={t('APPS_DIALER_INPUT_PLACEHOLDER')}
+        placeholder={t('DIALER.INPUT_PLACEHOLDER')}
         className={classes.input}
         value={inputVal}
         onChange={(e) => set(e.target.value)}

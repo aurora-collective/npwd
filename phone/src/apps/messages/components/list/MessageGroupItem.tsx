@@ -1,31 +1,62 @@
 import React from 'react';
-import { ListItem, ListItemText, ListItemAvatar, Avatar as MuiAvatar, Badge } from '@mui/material';
+import {
+  ListItem,
+  ListItemText,
+  Checkbox,
+  ListItemAvatar,
+  Avatar as MuiAvatar,
+  Badge,
+  ListItemIcon,
+} from '@mui/material';
 
-import { MessageConversation } from '../../../../../../typings/messages';
+import { MessageConversation } from '@typings/messages';
+import { useContactActions } from '../../../contacts/hooks/useContactActions';
 interface IProps {
   messageConversation: MessageConversation;
   handleClick: (conversations: MessageConversation) => () => void;
+  isEditing: boolean;
+  checked: string[];
+  handleToggle: (id: string) => void;
 }
 
-const MessageGroupItem = ({ messageConversation, handleClick }: IProps): any => {
-  // get unread messages, check the length. If we have any, get the groupId,
-  // and show the badge
+const MessageGroupItem = ({
+  messageConversation,
+  handleClick,
+  isEditing,
+  checked,
+  handleToggle,
+}: IProps): any => {
+  const toggleCheckbox = () => {
+    handleToggle(messageConversation.conversation_id);
+  };
+  const { getContactByNumber } = useContactActions();
 
-  /* const hasUnread = messageConversation.unreadCount > 0; */
+  const conversationContact = getContactByNumber(messageConversation.phoneNumber);
 
   return (
     <ListItem
       key={messageConversation.conversation_id}
-      onClick={handleClick(messageConversation)}
+      onClick={!isEditing ? handleClick(messageConversation) : toggleCheckbox}
       divider
       button
     >
+      {isEditing && (
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={checked.indexOf(messageConversation.conversation_id) !== -1}
+            disableRipple
+          />
+        </ListItemIcon>
+      )}
       <ListItemAvatar>
         <Badge color="error" variant="dot" invisible={messageConversation.unread > 0}>
-          <MuiAvatar src={messageConversation.avatar} />
+          <MuiAvatar src={conversationContact?.avatar} />
         </Badge>
       </ListItemAvatar>
-      <ListItemText>{messageConversation.display || messageConversation.phoneNumber}</ListItemText>
+      <ListItemText sx={{ overflow: 'hidden' }}>
+        {conversationContact?.display || messageConversation.phoneNumber}
+      </ListItemText>
     </ListItem>
   );
 };

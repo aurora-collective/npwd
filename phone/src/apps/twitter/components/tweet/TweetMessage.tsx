@@ -1,9 +1,9 @@
-import React, { memo, useEffect, useCallback, useRef } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
-import { usePhone } from '../../../../os/phone/hooks/usePhone';
+import { usePhone } from '@os/phone/hooks/usePhone';
 import { getNewLineCount } from '../../utils/message';
-import { TextField } from '../../../../ui/components/Input';
+import { TextField } from '@ui/components/Input';
 
 const useStyles = makeStyles({
   textField: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const TweetMessage = ({ modalVisible, message, handleChange }) => {
+export const TweetMessage = ({ modalVisible, message, handleChange, onEnter }) => {
   const textFieldInputRef = useRef(null);
   const classes = useStyles();
   const { ResourceConfig } = usePhone();
@@ -29,35 +29,17 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
 
   useEffect(() => {
     textFieldInputRef.current && textFieldInputRef.current.focus();
-    // we pass in modalVisible to this component so that we can
-    // intelligently decide when to focus the input field.
   }, [modalVisible]);
-
-  const _handleChange = useCallback(
-    (e) => {
-      // when the user types scroll the text field to the bottom
-      // so that we always have the latest line and error message
-      // in view
-      e.preventDefault();
-      textFieldInputRef.current.scrollTop = textFieldInputRef.current.scrollHeight;
-      handleChange(e.target.value);
-    },
-    [handleChange],
-  );
 
   if (!ResourceConfig) return null;
 
   let errorMessage = null;
 
   const overCharacterLimit = message.trim().length > characterLimit;
-  const characterWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_CHAR_LIMIT',
-  )} (${characterLimit})`;
+  const characterWarningPrompt = `${t('TWITTER,TWEET_MESSAGE_CHAR_LIMIT')} (${characterLimit})`;
 
   const overNewLineLimit = getNewLineCount(message) > newLineLimit;
-  const newLineWarningPrompt = `${t(
-    'APPS_TWITTER_TWEET_MESSAGE_NEW_LINE_LIMIT',
-  )} (${newLineLimit})`;
+  const newLineWarningPrompt = `${t('TWITTER.TWEET_MESSAGE_NEW_LINE_LIMIT')} (${newLineLimit})`;
 
   if (overCharacterLimit) {
     errorMessage = characterWarningPrompt;
@@ -65,18 +47,25 @@ export const TweetMessage = ({ modalVisible, message, handleChange }) => {
     errorMessage = newLineWarningPrompt;
   }
 
+  const handleOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (overNewLineLimit) return;
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      onEnter();
+    }
+  };
   return (
     <TextField
       value={message}
       inputProps={{ className: classes.textFieldInput }}
       className={classes.textField}
-      onChange={_handleChange}
+      onChange={(e) => handleChange(e.currentTarget.value)}
+      onKeyPress={handleOnEnter}
       multiline
-      placeholder={t('APPS_TWITTER_TWEET_MESSAGE_PLACEHOLDER')}
+      placeholder={t('TWITTER.TWEET_MESSAGE_PLACEHOLDER')}
       inputRef={textFieldInputRef}
       error={errorMessage !== null}
       helperText={errorMessage || null}
-      // ref={textFieldRef}
     />
   );
 };

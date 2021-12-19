@@ -28,7 +28,7 @@ export const PhoneProviders = () => {
   const classes = useStyles();
 
   return (
-    <NuiProvider resource="npwd">
+    <NuiProvider resource="aurora_phone">
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={currentTheme}>
           <SoundProvider>

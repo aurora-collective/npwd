@@ -1,26 +1,16 @@
-import React, { useEffect } from 'react';
-import { useNuiRequest } from 'fivem-nui-react-lib';
-import { useTweets } from '../../hooks/useTweets';
-import { useTwitterNotifications } from '../../hooks/useTwitterNotifications';
+import React from 'react';
 import TweetList from './TweetList';
-import { TwitterEvents } from '../../../../../../typings/twitter';
+import { useTweetsValue } from '../../hooks/state';
+import TweetSkeletonList from './TweetSkeletonList';
 
 export function TweetListContainer() {
-  const Nui = useNuiRequest();
-  const { tweets } = useTweets();
-  const { setUnreadCount } = useTwitterNotifications();
+  const tweets = useTweetsValue();
 
-  useEffect(() => {
-    Nui.send(TwitterEvents.FETCH_TWEETS, {});
-  }, [Nui]);
-
-  useEffect(() => {
-    if (tweets?.length) {
-      setUnreadCount(0);
-    }
-  }, [setUnreadCount, tweets]);
-
-  return <TweetList tweets={tweets} />;
+  return (
+    <React.Suspense fallback={<TweetSkeletonList />}>
+      <TweetList tweets={tweets} />
+    </React.Suspense>
+  );
 }
 
 export default TweetListContainer;

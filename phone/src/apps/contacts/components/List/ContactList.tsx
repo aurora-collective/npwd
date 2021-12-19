@@ -8,7 +8,7 @@ import { SearchContacts } from './SearchContacts';
 import { useHistory } from 'react-router-dom';
 import LogDebugEvent from '../../../../os/debug/LogDebugEvents';
 import { useFilteredContacts } from '../../hooks/state';
-import { useCall } from '../../../../os/call/hooks/useCall';
+import { useCall } from '@os/call/hooks/useCall';
 
 export const ContactList: React.FC = () => {
   const filteredContacts = useFilteredContacts();
@@ -34,7 +34,7 @@ export const ContactList: React.FC = () => {
       level: 1,
       data: { phoneNumber },
     });
-    history.push(`/messages/new/${phoneNumber}`);
+    history.push(`/messages/new?phoneNumber=${phoneNumber}`);
   };
 
   return (
@@ -50,7 +50,18 @@ export const ContactList: React.FC = () => {
                 <MuiAvatar>{contact.display.slice(0, 1).toUpperCase()}</MuiAvatar>
               )}
             </ListItemAvatar>
-            <ListItemText primary={contact.display} secondary={contact.number} />
+            <ListItemText
+              primary={contact.display}
+              secondary={contact.number}
+              primaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              secondaryTypographyProps={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            />
             <Button onClick={() => startCall(contact.number)}>
               <PhoneIcon />
             </Button>

@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 
 import ProfileUpdateButton from '../buttons/ProfileUpdateButton';
-import { SelectChangeEvent } from '@mui/material';
+import { MenuItem, SelectChangeEvent } from '@mui/material';
 
 interface DefaultProfilePromptProps {
   handleUpdate: () => void;
@@ -44,9 +44,7 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
   return (
     <div className={classes.root}>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="profile-name">
-          {t('APPS_TWITTER_EDIT_DEFAULT_PROFILE_NAME')}
-        </InputLabel>
+        <InputLabel htmlFor="profile-name">{t('TWITTER.EDIT_DEFAULT_PROFILE_NAME')}</InputLabel>
         <Select
           value={profileName}
           onChange={handleChange}
@@ -55,11 +53,10 @@ export const DefaultProfilePrompt: React.FC<DefaultProfilePromptProps> = ({
             id: 'profile-name',
           }}
         >
-          <option value="" />
           {defaultProfileNames.map((name) => (
-            <option key={name} value={name}>
+            <MenuItem key={name} value={name}>
               {name}
-            </option>
+            </MenuItem>
           ))}
         </Select>
       </FormControl>

@@ -1,6 +1,7 @@
 export interface IBankCredentials {
   name: string;
   balance: number;
+  crypto: number;
 }
 
 export interface Transfer {

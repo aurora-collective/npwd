@@ -3,7 +3,7 @@ import { CardContent, CardMedia, Chip, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
-import { FormattedProfile, FormattedMatch } from '../../../../../../typings/match';
+import { FormattedProfile, FormattedMatch } from '@typings/match';
 
 const useStyles = makeStyles({
   tags: {
@@ -59,7 +59,7 @@ const Profile = ({ profile }: IProps) => {
           {profile.name}
         </Typography>
         <Typography gutterBottom color="textSecondary" component="p">
-          {t('APPS_MATCH_PROFILE_LAST_ACTIVE', { lastActive: profile.lastActiveFormatted })}
+          {t('MATCH.MESSAGES.PROFILE_LAST_ACTIVE', { lastActive: profile.lastActiveFormatted })}
         </Typography>
         {bioSecondary && (
           <Typography gutterBottom variant="body1" color="textSecondary" component="p">
