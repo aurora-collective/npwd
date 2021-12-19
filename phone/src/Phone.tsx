@@ -17,7 +17,8 @@ import { isSettingsSchemaValid, useSettings } from './apps/settings/hooks/useSet
 import { useCallService } from '@os/call/hooks/useCallService';
 import { useDialService } from './apps/dialer/hooks/useDialService';
 import InjectDebugData from './os/debug/InjectDebugData';
-import { PhoneSnackbar } from './ui/components/PhoneSnackbar';
+import { useSnackbar } from '@os/snackbar/hooks/useSnackbar';
+import { PhoneSnackbar } from '@os/snackbar/components/PhoneSnackbar';
 import { useCallModal } from './os/call/hooks/useCallModal';
 import WindowSnackbar from './ui/components/WindowSnackbar';
 import { useTranslation } from 'react-i18next';

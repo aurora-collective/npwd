@@ -29,16 +29,6 @@ const debugObj = {
     });
   },
   mockNuiEvent: dispatchEvent,
-  testSnackbar: (message: string, type: IAlert) => {
-    dispatchEvent({
-      app: 'PHONE',
-      data: {
-        message,
-        type,
-      },
-      method: PhoneEvents.ADD_SNACKBAR_ALERT,
-    });
-  },
   setPhoneVisible: (bool: boolean) => {
     dispatchEvent({
       method: PhoneEvents.SET_VISIBILITY,
