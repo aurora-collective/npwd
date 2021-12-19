@@ -1,5 +1,5 @@
 {
-  "cellProvider": "AT&T",
+  "cellProvider": "Aurora",
   "defaultLanguage": "en",
   "wallpapers": [
     {
@@ -203,7 +203,7 @@
     "TWITTER_notifyNewFeedTweet": true
   },
   "appSettings": {
-    "browserHomePage": "https://docs.projecterror.dev"
+    "browserHomePage": "https://aurorav.net/forums"
   },
   "iconSet": [
     {
@@ -235,5 +235,5 @@
     "printDebugLogs": true,
     "logLevel": 1
   },
-  "SentryErrorMetrics": true
+  "SentryErrorMetrics": false
 }

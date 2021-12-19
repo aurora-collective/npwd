@@ -15,7 +15,7 @@ declare module '@mui/styles/defaultTheme' {
 export const PhoneProviders = () => {
   const currentTheme = usePhoneTheme();
   return (
-    <NuiProvider resource="npwd">
+    <NuiProvider resource="aurora_phone">
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={currentTheme}>
           <SoundProvider>

@@ -19,7 +19,3 @@ files {
     'resources/html/index.html',
     'resources/html/**/*',
 }
-
-dependency {
-	'screenshot-basic'
-}

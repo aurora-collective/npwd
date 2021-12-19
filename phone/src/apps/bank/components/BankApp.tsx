@@ -1,19 +1,16 @@
-import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { BankTitle } from './BankTitle';
 import { AppWrapper } from '@ui/components';
 import { AppContent } from '@ui/components/AppContent';
 import './BankApp.css';
-import { TransferModal } from './transfers/TransferModal';
-
 import { useBankModal } from '../hooks/useBankModal';
+import { TransferModal } from './transfers/TransferModal';
 
 import { Switch, Route } from 'react-router-dom';
 import { NavigationBar } from './navigation/NavigationBar';
 
 import { BankHome } from './home/BankHome';
-import { BankAccount } from './account/BankAccount';
-import { TransactionList } from './transactions/TransactionList';
+import { CryptoHome } from './home/CryptoHome';
 import InjectDebugData from '../../../os/debug/InjectDebugData';
 
 InjectDebugData([
@@ -106,8 +103,7 @@ export const BankApp = () => {
       <AppContent>
         <Switch>
           <Route path="/bank" exact component={BankHome} />
-          <Route path="/bank/account" exact component={BankAccount} />
-          <Route path="/bank/transactions" exact component={TransactionList} />
+          <Route path="/bank/crypto" exact component={CryptoHome} />
         </Switch>
       </AppContent>
       <NavigationBar />

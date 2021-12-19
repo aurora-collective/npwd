@@ -254,7 +254,7 @@
     "APPS_MESSAGES": "Messages",
     "APPS_CALCULATOR": "Calculator",
     "APPS_SETTINGS": "Settings",
-    "APPS_BANK": "WhoDis Banking",
+    "APPS_BANK": "Banking",
     "APPS_NOTES": "Notes",
     "APPS_EXAMPLE": "Example app",
     "APPS_TWITTER": "Twitter",
@@ -278,6 +278,7 @@
     "GENERIC_TITLE": "Title",
     "GENERIC_CONTENT": "Content",
     "GENERIC_WRITE_TO_CLIPBOARD_TOOLTIP": "Copy {{ content }}",
-    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!"
+    "GENERIC_WRITE_TO_CLIPBOARD_MESSAGE": "Copied {{content}} to clipboard!",
+    "APPS_BANK_HOME_TITLE": "Welcome"
   }
 }
