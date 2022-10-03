@@ -50,13 +50,14 @@ CreateThread(function()
         Wait(500)
 
         local isPauseOpen = IsPauseMenuActive() ~= false
+        local isPlayerDead = IsEntityDead(PlayerPedId()) ~= false
         local isPhoneVisible = exports.npwd:isPhoneVisible()
         -- Pause opened and hasn't been handled yet
-        if isPauseOpen and not cachedPauseStatus then
+        if (isPauseOpen or isPlayerDead) and not cachedPauseStatus then
             exports.npwd:setPhoneDisabled(true)
             cachedPauseStatus = true
         -- Pause closed and hasn't been undisabled yet
-        elseif not isPauseOpen and cachedPauseStatus then
+        elseif not (isPauseOpen or isPlayerDead) and cachedPauseStatus then
             exports.npwd:setPhoneDisabled(false)
             cachedPauseStatus = false
         end
